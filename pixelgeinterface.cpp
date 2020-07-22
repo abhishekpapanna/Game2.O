@@ -21,7 +21,13 @@ bool PixelGEinterface::OnUserCreate()
 bool PixelGEinterface::OnUserUpdate(float fElapsedTime)
 {
     //This method runs for every frame
-    //Every frame is a fresh frame with updated object locations
+    //Every frame is constructed fresh and drawn onto the screen
+
+    //Update all bullets
+    bullet.remove_if([&](const Bullet&b){return b.removeb;});
+
+    //Controlling the player
+    player->playerControl(fElapsedTime);
 
     //Drawing the background
     Clear(olc::DARK_BLUE);
@@ -29,19 +35,13 @@ bool PixelGEinterface::OnUserUpdate(float fElapsedTime)
     mbg += 50.0f * fElapsedTime;
     if (mbg > 0.0f) mbg = -600.0f;
 
-    //Update all bullets
-    bullet.remove_if([&](const Bullet&b){return b.removeb;});
-
-    //Draw the player first and then perform player actions
+    //Draw the player
     player->DrawPlayer();
+    //spawn and draw enemies
     spawnE(fElapsedTime);
-    player->playerControl(fElapsedTime);
-
-    //Draw all Bullets
+    //Draw all Bullets on the frame
     for (auto& b : bullet)
-    {
         b.removeb = b.move(fElapsedTime);
-    }
 
     return true;
 }
@@ -74,4 +74,3 @@ void PixelGEinterface::spawnE(float Timer)
 
     enemy.remove_if([&](const Enemy&e){return e.enemyPosY > ScreenHeight() || e.removee;});
 }
-
