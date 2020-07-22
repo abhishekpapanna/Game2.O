@@ -72,24 +72,24 @@ void Player::playerControl(float Timing)
     //Produce bullets
     if (Game->GetKey(olc::Key::SPACE).bPressed){
         Bullet b(playerPosX + 17.0f,playerPosY + 30.0f,'b');
+        Game->bullet.push_back(b);
         Bullet b2(playerPosX + 44.0f,playerPosY + 30.0f,'b');
-        bullet.push_back(b);
-        bullet.push_back(b2);
+        Game->bullet.push_back(b2);
     }
 
     if (Game->GetKey(olc::Key::M).bPressed){
         if(missile > 0){
             Bullet m(playerPosX + 29.0f,playerPosY,'m');
-            bullet.push_back(m);
+            Game->bullet.push_back(m);
         }
         missile--;
     }
 
-    for (auto &b : bullet) {
+    for (auto &b : Game->bullet) {
         b.removeb = b.move(Timing);
     }
 
-    bullet.remove_if([&](const Bullet&b){return b.removeb;});
+    //Game->bullet.remove_if([&](const Bullet&b){return b.removeb;});
 
     if (Game->GetKey(olc::Key::R).bPressed) missile = 100;
 }

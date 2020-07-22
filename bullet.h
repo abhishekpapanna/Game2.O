@@ -14,6 +14,7 @@ public:
     float getblPosY();
     void setblPos(float,float);
     ~Bullet();
+    float bulletSpeed = -750.0f;
 
 private:
     float bulletPosX;

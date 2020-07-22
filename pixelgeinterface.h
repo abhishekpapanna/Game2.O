@@ -15,7 +15,7 @@ public:
     olc::Decal* playerdecal = nullptr;
     olc::Sprite* bg = nullptr;
     olc::Decal* bgdecal = nullptr;
-    olc::Sprite* bullet = nullptr;
+    std::list <Bullet> bullet;
     olc::Decal* bulletdecal = nullptr;
     float mbg = -600.0f;
     void spawnE(float);

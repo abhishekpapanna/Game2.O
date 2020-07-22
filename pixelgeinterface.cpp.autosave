@@ -61,7 +61,7 @@ void PixelGEinterface::spawnE(float Timer)
 
     for (auto &e : enemy) {
         e.removee = e.move(Timer);
-        if (player->getplPosX() < (e.enemyInitPosX + 23.0f) && (player->getplPosX() + 70.0f) > (e.enemyInitPosX + 23.0f))
+        if (player->getplPosX() < (e.enemyInitPosX + 23.0f) && (player->getplPosX() + 70.0f) > (e.enemyInitPosX + 23.0f))       //Somewhat Smart Enemy
         {
             e.fireTime += Timer;
             if (e.fireTime > 0.5f){

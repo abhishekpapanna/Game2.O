@@ -14,6 +14,8 @@ public:
     float getEPosY();
     float enemyPosX = 0.0f;
     float enemyPosY = 0.0f;
+    float enemyInitPosX = 0.0f;
+    float fireTime = 0.0f;
 
 private:
     olc::Sprite * enemySprite = nullptr;
