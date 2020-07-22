@@ -13,7 +13,7 @@ Player::Player()
 }
 
 
-//Methods to get Player attributes
+//These methods return Player attributes
 float Player::getplPosX()
 {
     return playerPosX;
@@ -34,7 +34,7 @@ float Player::getplWidth()
     return playerWidth;
 }
 
-//Methods for setting these variables
+//Methods for setting player position variables
 void Player::setplPosX(float X)
 {
     playerPosX = X;
@@ -58,13 +58,15 @@ void Player::DrawPlayer()
         Game->DrawDecal({playerPosX,playerPosY},playerDecal,{0.7f,0.7f});
 }
 
+//Main function for controlling the player
 void Player::playerControl(float Timing)
 {
-    //Left - Right movement using arrow keys.
     //olc namespace has key definitions for all the keys with bHeld which means when the key is held
+
+    //Player Movement
+    //Left - Right movement using arrow keys.
     if (Game->GetKey(olc::Key::LEFT).bHeld) playerPosX -= playerSpeed * Timing;
     if (Game->GetKey(olc::Key::RIGHT).bHeld) playerPosX += playerSpeed * Timing;
-
     //Bind the player position to screen
     if (playerPosX < 11.0f) playerPosX = 11.0f;
     if (playerPosX + playerWidth > float(Game->ScreenWidth()) - 10.0f) playerPosX = float(Game->ScreenWidth()) - 10.0f - playerWidth;
@@ -85,11 +87,6 @@ void Player::playerControl(float Timing)
         missile--;
     }
 
-    for (auto &b : Game->bullet) {
-        b.removeb = b.move(Timing);
-    }
-
-    //Game->bullet.remove_if([&](const Bullet&b){return b.removeb;});
-
+    //This is a cheat, It gives the player 100 more missiles to test when Reload Key is pressed
     if (Game->GetKey(olc::Key::R).bPressed) missile = 100;
 }

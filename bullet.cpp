@@ -30,16 +30,17 @@ bool Bullet::move(float Timer)
 {
     if (bulletDecal != nullptr)
     {
-        if (bulletPosY < 0 && bulletPosY > Game->ScreenHeight()){
+        if (bulletPosY < 0 && bulletPosY > Game->ScreenHeight()){   //Binds all bullets to the Screen, bullets will be removed once they cross either side of the screen
             delete bulletDecal;
             bulletDecal = nullptr;
-            //delete this;
 
             return true;
         }
 
+        //Draw the bullet onto the screen
         Game->DrawDecal({bulletPosX,bulletPosY}, bulletDecal,{0.7f,0.7f});
 
+        //bullet movement
         bulletPosY += bulletSpeed * Timer;
 
     }

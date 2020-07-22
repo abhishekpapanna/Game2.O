@@ -42,3 +42,13 @@
             bullet = nullptr;
         }
     }*/
+
+
+//Removed from player control method, bullet firing section
+//Game Object will take care of managing all bullets onto screen.
+
+//for (auto &b : Game->bullet) {
+//    b.removeb = b.move(Timing);
+//}
+
+//Game->bullet.remove_if([&](const Bullet&b){return b.removeb;});

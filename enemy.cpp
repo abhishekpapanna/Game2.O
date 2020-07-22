@@ -8,6 +8,7 @@ Enemy::Enemy()
 
 }
 
+//Default enemy spawn constructor
 Enemy::Enemy(float posX, float posY)
 {
     enemyPosX = posX;
@@ -17,7 +18,7 @@ Enemy::Enemy(float posX, float posY)
 }
 
 
-//Same as bullet, except this will be generated Directly from the Game object.
+//Same as bullet, except this will be generated(Spawned) Directly from the Game object.
 bool Enemy::move(float Timer)
 {
     if (enemyDecal != nullptr)
@@ -25,7 +26,6 @@ bool Enemy::move(float Timer)
         if (enemyPosY < 0){
             delete enemyDecal;
             enemyDecal = nullptr;
-            //delete this;
 
             return true;
         }
