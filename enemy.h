@@ -16,6 +16,7 @@ public:
     float enemyPosY = 0.0f;
     float enemyInitPosX = 0.0f;
     float fireTime = 0.0f;
+    int eHealth = 30;
 
 private:
     olc::Sprite * enemySprite = nullptr;

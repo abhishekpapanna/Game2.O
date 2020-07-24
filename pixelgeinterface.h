@@ -11,6 +11,7 @@ public:
     PixelGEinterface();
     bool OnUserCreate() override;
     bool OnUserUpdate(float fElapsedTime) override;
+    bool bulletCollision();
     Player * player = nullptr;
     olc::Decal* playerdecal = nullptr;
     olc::Sprite* bg = nullptr;

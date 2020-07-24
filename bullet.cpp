@@ -12,25 +12,31 @@ Bullet::Bullet()
 
 Bullet::Bullet(float posX, float posY, char type)
 {
-    if (type == 'b')
+    if (type == 'b'){
         bulletSprite = new olc::Sprite("./img/bullet.png");
-    if (type == 'm')
+    }
+
+    if (type == 'm'){
         bulletSprite = new olc::Sprite("./img/missile.png");
-    if (type == 'e')
-    {
+    }
+
+    if (type == 'e'){
         bulletSprite = new olc::Sprite("./img/ebullet.png");
         bulletSpeed = 750.0f;
     }
+
     bulletDecal = new olc::Decal(bulletSprite);
     bulletPosX = posX;
     bulletPosY = posY;
+    bulletType = type;
 }
 
 bool Bullet::move(float Timer)
 {
     if (bulletDecal != nullptr)
     {
-        if (bulletPosY < 0 || bulletPosY > Game->ScreenHeight()){   //Binds all bullets to the Screen, bullets will be removed once they cross either side of the screen
+        //Binds all bullets to the Screen, bullets will be removed once they cross either side of the screen
+        if (bulletPosY < 0 || bulletPosY > Game->ScreenHeight()){
             delete bulletDecal;
             bulletDecal = nullptr;
 
@@ -42,14 +48,24 @@ bool Bullet::move(float Timer)
 
         //bullet movement
         bulletPosY += bulletSpeed * Timer;
-
     }
 
     return false;
+}
+
+float Bullet::getblPosX()
+{
+    return bulletPosX;
+}
+
+float Bullet::getblPosY()
+{
+    return bulletPosY;
 }
 
 Bullet::~Bullet()
 {
     std::cout << "Bullet Deleted" << std::endl ;
 }
+
 

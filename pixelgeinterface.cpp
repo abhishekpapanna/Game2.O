@@ -1,6 +1,7 @@
 #include "engine/olcPixelGameEngine.h"
 #include "pixelgeinterface.h"
 #include "player.h"
+#include "bullet.h"
 #include <stdlib.h>
 
 
@@ -24,10 +25,14 @@ bool PixelGEinterface::OnUserUpdate(float fElapsedTime)
     //Every frame is constructed fresh and drawn onto the screen
 
     //Update all bullets
+    bulletCollision();
     bullet.remove_if([&](const Bullet&b){return b.removeb;});
 
     //Controlling the player
     player->playerControl(fElapsedTime);
+
+    //Update enemies
+    enemy.remove_if([&](const Enemy&e){return e.removee;});
 
     //Drawing the background
     Clear(olc::DARK_BLUE);
@@ -46,6 +51,33 @@ bool PixelGEinterface::OnUserUpdate(float fElapsedTime)
     return true;
 }
 
+bool PixelGEinterface::bulletCollision()
+{
+    olc::vf2d bPos;
+    for(auto& b : bullet)
+    {
+        bPos = {b.getblPosX(),b.getblPosY()};
+        if (b.bulletType != 'e'){
+            for(auto& e : enemy){
+                if (bPos.x > e.enemyPosX && bPos.x < (e.enemyPosX + 50.0f) && bPos.y > e.enemyPosY && bPos.y < (e.enemyPosY + 50.0f)){
+                    if (b.bulletType == 'm') e.eHealth -= 100;
+                    e.eHealth -= 5;
+                    if (e.eHealth <= 0) e.removee = true;
+                    b.removeb = true;
+                }
+            }
+        }
+        else{
+            if (bPos.x > player->getplPosX() && bPos.x < (player->getplPosX() + 60.0f) && bPos.y > player->getplPosY() && bPos.y < (player->getplPosY() + 70.0f)){
+                b.removeb = true;
+            }
+        }
+    }
+
+    return true;
+}
+
+//Spawn Enemies every Two seconds and also define enemy behavior in game
 void PixelGEinterface::spawnE(float Timer)
 {
     spawnTime += Timer;
@@ -61,7 +93,9 @@ void PixelGEinterface::spawnE(float Timer)
 
     for (auto &e : enemy) {
         e.removee = e.move(Timer);
-        if (player->getplPosX() < (e.enemyInitPosX + 23.0f) && (player->getplPosX() + 70.0f) > (e.enemyInitPosX + 23.0f))       //Somewhat Smart Enemy
+
+        //Somewhat Smart Enemy, Enemy will fire only when the player is in front of its barrel
+        if (player->getplPosX() < (e.enemyInitPosX + 23.0f) && (player->getplPosX() + 70.0f) > (e.enemyInitPosX + 23.0f))
         {
             e.fireTime += Timer;
             if (e.fireTime > 0.5f){
