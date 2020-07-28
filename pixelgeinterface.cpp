@@ -16,6 +16,8 @@ bool PixelGEinterface::OnUserCreate()
     player = new Player();
     bg = new olc::Sprite("./img/bg2.png");
     bgdecal = new olc::Decal(bg);
+    bulletsprite = new olc::Sprite("./img/bullet.png");
+    bulletdecal = new olc::Decal(bulletsprite);
     return true;
 }
 
@@ -35,11 +37,15 @@ bool PixelGEinterface::OnUserUpdate(float fElapsedTime)
     enemy.remove_if([&](const Enemy&e){return e.removee;});
 
     //Drawing the background
-    Clear(olc::DARK_BLUE);
+    //SetDrawTarget(1);
+    //DrawSprite({int(0.0f),int(mbg)}, bg);
+    //Clear(olc::DARK_BLUE);
+    //DrawSprite({int(0.0f),int(mbg)}, bg);
     DrawDecal({0.0f,mbg}, bgdecal);
     mbg += 50.0f * fElapsedTime;
     if (mbg > 0.0f) mbg = -600.0f;
 
+    //SetDrawTarget(0);
     //Draw the player
     player->DrawPlayer();
     //spawn and draw enemies
@@ -59,7 +65,7 @@ bool PixelGEinterface::bulletCollision()
         bPos = {b.getblPosX(),b.getblPosY()};
         if (b.bulletType != 'e'){
             for(auto& e : enemy){
-                if (bPos.x > e.enemyPosX && bPos.x < (e.enemyPosX + 50.0f) && bPos.y > e.enemyPosY && bPos.y < (e.enemyPosY + 50.0f)){
+                if (bPos.x > e.enemyPosX && bPos.x < (e.enemyPosX + 50.0f) && bPos.y > e.enemyPosY && bPos.y < (e.enemyPosY + 30.0f)){
                     if (b.bulletType == 'm') e.eHealth -= 100;
                     e.eHealth -= 5;
                     if (e.eHealth <= 0) e.removee = true;
@@ -68,6 +74,7 @@ bool PixelGEinterface::bulletCollision()
             }
         }
         else{
+            //Player damage goes here
             if (bPos.x > player->getplPosX() && bPos.x < (player->getplPosX() + 60.0f) && bPos.y > player->getplPosY() && bPos.y < (player->getplPosY() + 70.0f)){
                 b.removeb = true;
             }
@@ -82,7 +89,7 @@ void PixelGEinterface::spawnE(float Timer)
 {
     spawnTime += Timer;
 
-    if (spawnTime >= 2.0f)
+    if (spawnTime >= 1.5f)
     {
         spawnTime = Timer;
         float init = (float)(10+(rand() % (ScreenWidth() - 100)));

@@ -18,6 +18,7 @@ public:
     float getplWidth();
     void DrawPlayer();
     void playerControl(float);
+    float fireTime = 0;
 
 private:
     float playerPosX = 0.0f;

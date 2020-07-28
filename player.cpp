@@ -72,11 +72,15 @@ void Player::playerControl(float Timing)
     if (playerPosX + playerWidth > float(Game->ScreenWidth()) - 10.0f) playerPosX = float(Game->ScreenWidth()) - 10.0f - playerWidth;
 
     //Produce bullets
-    if (Game->GetKey(olc::Key::SPACE).bPressed){
-        Bullet b(playerPosX + 17.0f,playerPosY + 30.0f,'b');
-        Game->bullet.push_back(b);
-        Bullet b2(playerPosX + 44.0f,playerPosY + 30.0f,'b');
-        Game->bullet.push_back(b2);
+    if (Game->GetKey(olc::Key::SPACE).bHeld){
+        fireTime += Timing;
+        if(fireTime > 0.2f){
+            Bullet b(playerPosX + 17.0f,playerPosY + 30.0f,'b');
+            Game->bullet.push_back(b);
+            Bullet b2(playerPosX + 44.0f,playerPosY + 30.0f,'b');
+            Game->bullet.push_back(b2);
+            fireTime = Timing;
+        }
     }
 
     if (Game->GetKey(olc::Key::M).bPressed){

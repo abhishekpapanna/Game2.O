@@ -65,7 +65,7 @@ float Bullet::getblPosY()
 
 Bullet::~Bullet()
 {
-    std::cout << "Bullet Deleted" << std::endl ;
+    //std::cout << "Bullet Deleted" << std::endl ;
 }
 
 
